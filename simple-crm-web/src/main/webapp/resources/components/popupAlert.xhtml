@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:et="http://java.sun.com/jsf/composite/components"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <composite:interface>
+        <composite:attribute name="action"/>
+        <composite:attribute name="alertImg"/>
+        <composite:attribute name="header"/>
+        <composite:attribute name="managedBean" />
+        <composite:attribute name="modalId" />
+        <composite:attribute name="render" />
+        <composite:attribute name="oncomplete" />
+        
+    </composite:interface>
+
+    <composite:implementation>
+        <et:modalPanel modalId="#{cc.attrs.modalId}"
+					   header="#{cc.attrs.header}"
+					   headerClass="header-alert"
+					   controlsClass="header-alert-txt">
+            <c:if test="#{!empty cc.attrs.alertImg}">
+                <h:graphicImage id="alertImg" value="#{cc.attrs.alertImg}" title="#{cc.attrs.tooltipMessage}"/>
+            </c:if>
+            <a4j:region>
+                <h:outputText id="alertMessage" value="#{cc.attrs.managedBean.alertManager.alerta.mensaje}" escape="false" />
+		<div class="button-alert-content">
+                <et:a4jButton action="#{cc.attrs.managedBean.acceptAlert()}" divId="generic-button"
+                              value="#{cc.attrs.managedBean.alertManager.alerta.etiquetaBotonSubmit}"
+                              oncomplete="if (#{! cc.attrs.managedBean.alertManager.hasAlert}){
+                                           #{rich:component(cc.attrs.modalId)}.hide();
+                                           #{cc.attrs.oncomplete};
+                                           }
+                                           parcheMensajes();"
+                              rendered="#{cc.attrs.managedBean.alertManager.alerta.submitable}"
+                              render="#{cc.attrs.render} alertMessage" />
+
+                <et:a4jButton action="#{cc.attrs.managedBean.cancelAlert()}"
+                              rendered="#{cc.attrs.managedBean.alertManager.alerta.cancellable}"
+                              divId="generic-button"
+                              value="#{cc.attrs.managedBean.alertManager.alerta.etiquetaBotonCancel}"
+                              oncomplete="#{rich:component(cc.attrs.modalId)}.hide();
+                                           parcheMensajes();"/>
+                 </div>   
+            </a4j:region>
+        </et:modalPanel>
+    </composite:implementation>
+</html>

@@ -1,0 +1,139 @@
+<ui:composition id="Home" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:richfaces="http://richfaces.ajax4jsf.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:j4j="http://jbpm.org/jbpm4jsf/core"
+	xmlns:et="http://java.sun.com/jsf/composite/components"
+	template="../layout/template.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="main-content">
+		<div>
+			<h1>#{messages.mainTitle}</h1>
+		</div>
+		<div>
+			<a4j:region>
+				<h:form id="tabPanelFrm">
+					<rich:tabPanel id="mainTabPanel"
+						activeItem="#{tabsBean.activeItem}" switchType="ajax"
+						styleClass="tab-page" tabActiveHeaderClass="active-tab-header"
+						tabInactiveHeaderClass="inactive-tab-header"
+						tabContentClass="grid-16" tabHeaderClass="tab-header">
+						<rich:tab name="mainTab" id="mainTab"
+							header="#{messages.dashboard}" headerClass="tab-header"
+							styleClass="tab">
+							<div class="grids">
+								<div class="grid-2">
+									<rich:panel header="Quick Create" style="">
+										<div class="grid-2">
+											<rich:panel header="Quick Create" styleClass="button">
+												<ul>
+													<li>Cliente <a4j:commandButton styleClass="add-button"
+															execute="@form" image="../img/add.png">
+															<rich:componentControl target="create-customer-popup"
+																operation="show" event="click" />
+														</a4j:commandButton>
+													</li>
+													<li>Oportunidad <a4j:commandButton
+															styleClass="add-button" execute="@form"
+															image="../img/add.png" /></li>
+													<li>Proyecto <a4j:commandButton
+															styleClass="add-button" execute="@form"
+															image="../img/add.png" /></li>
+													<li>Propuesta <a4j:commandButton
+															styleClass="add-button" execute="@form"
+															image="../img/add.png" /></li>
+												</ul>
+											</rich:panel>
+										</div>
+									</rich:panel>
+								</div>
+								<div class="grid-10">
+									<et:customerGrid id="customerTable"
+										values="#{dashboardBean.customers}" />
+								</div>
+							</div>
+							<et:opportunityGrid id="opoprtunitiesGrid"
+								values="#{dashboardBean.opportunities}" />
+							<et:proposalsTable id="proposalsTable"
+								values="#{dashboardBean.proposals}" sortMode="single"
+								sortingBean="#{dashboardBean.proposalSortingBean}" />
+
+							<et:projectsTable id="projectsTable"
+								values="#{dashboardBean.projects}" sortMode="single"
+								sortingBean="#{dashboardBean.projectSortingBean}" />
+
+						</rich:tab>
+						<c:forEach items="#{tabsBean.tabs}" var="tab">
+							<rich:tab name="#{tab.name}">
+								<f:facet name="header">
+									<h:panelGroup layout="BLOCK">
+										<!-- Nombre del Tab -->
+										<h:outputText value="#{tab.object.entity.toString()}" />
+										<!-- Fin NOmbre -->
+										<h:graphicImage value="/img/close.png">
+											<a4j:ajax event="click" execute="#{tabsBean.removeTab(tab)}"
+												render="mainTabPanel" />
+										</h:graphicImage>
+									</h:panelGroup>
+								</f:facet>
+								<!-- Contenido -->
+								<ui:include src="#{tab.object.tabContent}" />
+								<!-- Fin Contenido -->
+							</rich:tab>
+						</c:forEach>
+					</rich:tabPanel>
+				</h:form>
+			</a4j:region>
+			<h:form>
+				<rich:popupPanel id="create-customer-popup" modal="true"
+					resizeable="true"
+					onmaskclick="#{rich:component('create-customer-popup')}.hide()">
+					<f:facet name="header">
+						<h:outputText value="Crear Cliente" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#"
+							onclick="#{rich:component('create-customer-popup')}.hide(); return false;">
+                      X
+                  </h:outputLink>
+					</f:facet>
+					<f:metadata>
+						<f:event type="javax.faces.event.PreRenderViewEvent"
+							listener="#{customerBean.beginConversation()}" />
+					</f:metadata>
+
+					<h:form id="update-member-data-form">
+						<a4j:region>
+							<h:panelGroup layout="block">
+								<rich:panel headerClass="data-panel-header"
+									bodyClass="data-panel-body">
+									<f:facet name="header">#{messages.MemberDataPersonalInformation}</f:facet>
+									<div>
+										<label for="customerName" class="input-label">#{messages.MemberDataCredential}</label>
+										<h:inputText id="customerName"
+											value="#{customerBean.customer.customerName}" />
+										<label for="nombre" class="input-label">#{messages.taxpayerId}</label>
+										<h:inputText id="nombre"
+											value="#{customerBean.customer.taxpayerId}" />
+									</div>
+								</rich:panel>
+								<a4j:commandButton value="Guardar" title="Guardar"
+									action="#{customerBean.saveCustomer}" id="saveCustBtn"
+									oncomplete="#{rich:component('create-customer-popup')}.hide(); return false;"
+									render="customerTable" />
+								<a4j:commandButton value="Cancelar" title="Cancelar"
+									oncomplete="#{rich:component('create-customer-popup')}.hide(); return false;" />
+
+							</h:panelGroup>
+						</a4j:region>
+					</h:form>
+				</rich:popupPanel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

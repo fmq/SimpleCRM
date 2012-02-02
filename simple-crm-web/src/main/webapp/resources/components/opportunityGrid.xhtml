@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:composite="http://java.sun.com/jsf/composite"
+                xmlns:et="http://java.sun.com/jsf/composite/components"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <composite:interface>
+        <composite:attribute name="id" />
+        <composite:attribute name="values"/>
+        <composite:attribute name="selection" default=""/>
+        <composite:attribute name="selectionListener" default=""/>
+    </composite:interface>
+
+    <composite:implementation>
+        <et:header header="${messages.opportunitiesHeader}"/>
+            <a4j:region>
+                <rich:dataGrid id="#{cc.attrs.id}Gr" elements="5"
+                                        value="#{cc.attrs.values}" 
+                                        var="opportunity" styleClass="grids"
+                                        columns="1">
+                    <c:if test="#{!empty cc.attrs.selectionListener}">
+                        <a4j:ajax execute="@this" event="selectionchange" listener="#{cc.attrs.selectionListener}" />
+                    </c:if>
+   
+                    <rich:panel bodyClass="grid-cell" >
+                          <div class="grid-5">
+                              <a4j:commandLink value="#{messages.opportunityName}" action="#{dashboardBean.showDetails('OPPORTUNITY',opportunity.opportunityId)}" render="mainTabPanel"/>
+                              <br></br>
+                              <h:outputText value="#{opportunity.customerName}"  />
+                          </div>
+                          <div class="grid-3">
+                              <h:outputText value="#{opportunity.expectedCloseDate}" rendered="#{!empty opportunity.expectedCloseDate}"/>
+                              <br></br>
+                            <h:outputText value="#{opportunity.winProbability}"/>
+                          </div>
+                          <div class="grid-4">
+                            <h:outputText value="#{opportunity.totalAmount}" class="amount-cell left"/>
+                            <h:outputText value="#{opportunity.totalForecastAmount}" class="amount-cell right"/>
+                          </div>
+                        </rich:panel>
+                    <f:facet name="footer">
+                      <rich:dataScroller  renderIfSinglePage="false" />
+                    </f:facet>
+                </rich:dataGrid>
+            </a4j:region> 
+    </composite:implementation>
+</ui:composition>

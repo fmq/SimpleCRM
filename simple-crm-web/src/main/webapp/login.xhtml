@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:et="http://java.sun.com/jsf/composite/components"
+                template="layout/loginTemplate.xhtml">
+   <ui:define name="login-main-content">
+      <div class="content-login">
+         <h:form id="mainForm">
+
+            <et:inputTxt gralStyle="user-login input-error-binding" label="#{messages.loginCredential}"
+                         value="#{credentials.username}" id="usernameId" 
+                         required="true" tooltipMessage="#{messages.loginUserTooltip}">
+            </et:inputTxt>                 
+
+            <et:inputSecret gralStyle="pass-login input-error-binding" label="#{messages.loginPassword}"
+                            value="#{credentials.password}" id="pass-login" 
+                            required="true" tooltipMessage="#{messages.loginPassTooltip}"/>
+
+            <et:buttonBar>
+                <et:commandButton value="#{messages.buttonLogin}" type="submit" action="#{identity.login}"/>
+               <h:commandLink action="view/recuperarPass/recoverPassword.xhtml?faces-redirect=true"
+                              value="#{messages.buttonrecoverPassword}" immediate="true" />
+            </et:buttonBar>
+
+            <h:panelGroup layout="block" styleClass="login-error-message">
+               <rich:message for="mainForm" ajaxRendered="true" styleClass="error-message" />
+            </h:panelGroup>
+         </h:form>
+      </div>
+   </ui:define>
+</ui:composition>

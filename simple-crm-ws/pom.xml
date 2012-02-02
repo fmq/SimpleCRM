@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>ar.com.easytech.simplecrm</groupId>
+		<artifactId>simple-crm</artifactId>
+		<version>1.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>simple-crm-ws</artifactId>
+	<packaging>war</packaging>
+	<name>Simple CRM - WS</name>
+
+	<build>
+		<finalName>simple-crm-ws</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>2.3.0.GA</version>
+        </dependency>
+            
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>ejb-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>
+	<dependency>
+		<groupId>ar.com.easytech.simplecrm</groupId>
+		<artifactId>simple-crm-service</artifactId>
+		<type>ejb-client</type>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>ar.com.easytech.simplecrm</groupId>
+		<artifactId>simple-crm-model</artifactId>
+	</dependency>
+    </dependencies>
+</project>

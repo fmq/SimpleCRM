@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:et="http://java.sun.com/jsf/composite/components"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+
+
+    <rich:panel styleClass="data-panel" headerClass="data-panel-header" bodyClass="data-panel-body">
+        <et:header header="#{messages.opportunityDetailHeader}"/>
+            <a4j:region>
+                <h:panelGrid columns="4" columnClasses="label, data, label, data" headerClass="grid-header">
+                    <h:outputLabel value="#{messages.opportunityNumber}"/>
+                    <h:outputText value="#{tab.object.entity.opportunityNumber}"/>
+                    <h:outputLabel value="#{messages.opportunityName}"/>
+                    <h:outputText value="#{tab.object.entity.opportunityName}"/>
+                </h:panelGrid>
+            </a4j:region>
+    </rich:panel>
+</ui:composition>

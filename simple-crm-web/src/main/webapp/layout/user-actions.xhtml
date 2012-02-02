@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<ui:composition id="Logout" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+   <div>
+      <div>
+         <h:form id="logout-form">
+            <div class="right">
+                <div class="name-user">#{authenticatorImpl.sysUser.displayName}</div>
+               <div class="close-session"><h:commandLink value="#{messages.logout}"
+                                                         action="#{identity.logout}" />
+               </div>
+            </div>
+         </h:form>
+      </div>
+   </div>
+</ui:composition>
+

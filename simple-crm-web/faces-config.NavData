@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="resources/components/selectOneMenuSocio.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="view/customerTableRG.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="view/dashboard.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="resources/components/modalPanel.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="login.xhtml" x="675" y="372" zoom="true"/>
+        <Node id="resources/components/buttonBar.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="resources/components/message.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="*" x="150" y="600" zoom="true"/>
+        <Node id="resources/components/spacer.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="view/*" x="400" y="600" zoom="true"/>
+        <Node id="resources/components/inputTxt.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="layout/loginTemplate.xhtml" x="625" y="282" zoom="true"/>
+        <Node id="resources/components/header.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="layout/user-actions.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="resources/components/commandButton.xhtml" x="111" y="340" zoom="true"/>
+        <Node id="resources/components/panel.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="resources/components/popupAlert.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="layout/template.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="resources/components/a4jButton.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="resources/components/inputSecret.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="resources/components/div.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="resources/components/subheader.xhtml" x="115" y="309" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

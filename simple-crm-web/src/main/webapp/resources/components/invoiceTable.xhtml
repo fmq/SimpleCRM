@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:et="http://java.sun.com/jsf/composite/components"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<composite:interface>
+		<composite:attribute name="id" />
+		<composite:attribute name="values" />
+		<composite:attribute name="imageBean" default=""/>
+		<composite:attribute name="selection" default="" />
+		<composite:attribute name="selectionListener" default="" />
+		<composite:attribute name="selectionMode" default="none" />
+		<composite:attribute name="sortMode" default="none" />
+		<composite:attribute name="sortingBean" default="" />
+	</composite:interface>
+
+	<composite:implementation>
+		<et:header header="${messages.invoiceHeader}" />
+		<a4j:region>
+			<rich:extendedDataTable id="#{cc.attrs.id}"
+				styleClass="data-panel-list" value="#{cc.attrs.values}"
+				var="invoice" sortMode="#{cc.attrs.sortMode}"
+				selection="#{cc.attrs.selection}" rowClasses="table-row1,table-row2"
+				noDataLabel="#{messages.noDataFound}"
+				selectionMode="#{cc.attrs.selectionMode}">
+
+				<c:if test="#{!empty cc.attrs.selectionListener}">
+					<a4j:ajax execute="@form" event="selectionchange"
+						listener="#{cc.attrs.selectionListener}" />
+				</c:if>
+
+				<c:if test="#{!empty cc.attrs.sortingBean}">
+					<rich:column width="120px;"
+						sortOrder="#{cc.attrs.sortingBean.invoiceNumberOrder}"
+						sortBy="#{invoice.invoiceNumber}">
+						<f:facet name="header">
+							<a4j:commandLink id="invoiceNumberOrder"
+								value="#{messages.invoiceNumber}"
+								actionListener="#{cc.attrs.sortingBean.sortAction}"
+								render="#{cc.attrs.id}" />
+						</f:facet>
+						<h:outputText value="#{invoice.invoiceNumber}" />
+					</rich:column>
+					<rich:column width="120px;"
+						sortOrder="#{cc.attrs.sortingBean.totalOrder}"
+						sortBy="#{invoice.total}">
+						<f:facet name="header">
+							<a4j:commandLink id="totalOrder" value="#{messages.invoiceTotal}"
+								actionListener="#{cc.attrs.sortingBean.sortAction}"
+								render="#{cc.attrs.id}" />
+						</f:facet>
+						<h:outputText value="#{invoice.total}" />
+					</rich:column>
+					<rich:column width="120px;"
+						sortOrder="#{cc.attrs.sortingBean.currencyCodeOrder}"
+						sortBy="#{invoice.currencyCode}">
+						<f:facet name="header">
+							<a4j:commandLink id="currencyCodeOrder"
+								value="#{messages.currencyCode}"
+								actionListener="#{cc.attrs.sortingBean.sortAction}"
+								render="#{cc.attrs.id}" />
+						</f:facet>
+						<h:outputText value="#{invoice.currencyCode}" />
+					</rich:column>
+					<rich:column width="120px;"
+						sortOrder="#{cc.attrs.sortingBean.statusOrder}"
+						sortBy="#{invoice.status}">
+						<f:facet name="header">
+							<a4j:commandLink id="statusCodeOrder" value="#{messages.status}"
+								actionListener="#{cc.attrs.sortingBean.sortAction}"
+								render="#{cc.attrs.id}" />
+						</f:facet>
+						<h:outputText value="#{invoice.status}" />
+					</rich:column>
+				</c:if>
+				<c:if test="#{empty cc.attrs.sortingBean}">
+					<rich:column width="120px;">
+						<f:facet name="header">
+							<h:outputText value="#{messages.invoiceNumber}" />
+						</f:facet>
+						<h:outputText value="#{invoice.invoiceNumber}" />
+					</rich:column>
+					<rich:column width="120px;">
+						<f:facet name="header">
+							<h:outputText value="#{messages.invoiceTotal}" />
+						</f:facet>
+						<h:outputText value="#{invoice.total}" />
+					</rich:column>
+					<rich:column width="120px;">
+						<f:facet name="header">
+							<h:outputText value="#{messages.currencyCode}" />
+						</f:facet>
+						<h:outputText value="#{invoice.currencyCode}" />
+					</rich:column>
+					<rich:column width="120px;">
+						<f:facet name="header">
+							<h:outputText value="#{messages.status}" />
+						</f:facet>
+						<h:outputText value="#{invoice.status}" />
+					</rich:column>
+				</c:if>
+			</rich:extendedDataTable>
+                    <a4j:mediaOutput element="img"
+                        cacheable="false"
+                        session="true"
+                        createContent="#{cc.attrs.imageBean.generatePieChart}"
+                        mimeType="image/jpeg" />
+		</a4j:region>
+	</composite:implementation>
+
+</ui:composition>
